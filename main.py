@@ -11,6 +11,8 @@ from vanna.integrations.local.agent_memory import DemoAgentMemory
 from vanna.capabilities.sql_runner import RunSqlToolArgs
 from vanna.tools.visualize_data import VisualizeDataArgs
 
+from sql_debug_logger import TerminalSqlAuditLogger
+
 
 class SimpleUserResolver(UserResolver):
     async def resolve_user(self, request_context: RequestContext) -> User:
@@ -41,7 +43,8 @@ def main():
         tool_registry=tools,
         user_resolver=SimpleUserResolver(),
         config=AgentConfig(),
-        agent_memory=agent_memory
+        agent_memory=agent_memory,
+        audit_logger=TerminalSqlAuditLogger(),
     )
 
     # 4. Create and run server
